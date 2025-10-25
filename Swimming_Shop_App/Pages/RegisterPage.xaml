@@ -1,0 +1,81 @@
+<Page x:Class="Swimming_Shop_App.Pages.RegisterPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="RegisterPage">
+    <Page.Resources>
+        <Style TargetType="TextBox">
+            <Setter Property="Margin" Value="0,8,0,0"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Padding" Value="12,6"/>
+            <Setter Property="Background" Value="#F6FBFF"/>
+            <Setter Property="BorderBrush" Value="#C8E6FF"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        </Style>
+        <Style TargetType="PasswordBox">
+            <Setter Property="Margin" Value="0,8,0,0"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Padding" Value="12,6"/>
+            <Setter Property="Background" Value="#F6FBFF"/>
+            <Setter Property="BorderBrush" Value="#C8E6FF"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="Height" Value="44"/>
+            <Setter Property="Margin" Value="0,18,0,0"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                        <GradientStop Color="#0E7AC3" Offset="0"/>
+                        <GradientStop Color="#00C2FF" Offset="1"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="BorderBrush" Value="#0E7AC3"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16"/>
+        </Style>
+    </Page.Resources>
+
+    <Grid HorizontalAlignment="Stretch">
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel HorizontalAlignment="Stretch">
+                <TextBlock Text="Создать аккаунт" FontSize="24" FontWeight="Bold" Foreground="#0E7AC3"/>
+                <TextBlock Text="Заполните поля для регистрации." Margin="0,4,0,16" Foreground="#477EA8"/>
+
+                <TextBlock Text="Email" Margin="0,10,0,0" Foreground="#477EA8"/>
+                <TextBox x:Name="EmailTextBox"/>
+
+                <TextBlock Text="Пароль" Margin="0,10,0,0" Foreground="#477EA8"/>
+                <PasswordBox x:Name="PasswordBox"/>
+
+                <TextBlock Text="Имя" Margin="0,10,0,0" Foreground="#477EA8"/>
+                <TextBox x:Name="FirstNameTextBox"/>
+
+                <TextBlock Text="Фамилия" Margin="0,10,0,0" Foreground="#477EA8"/>
+                <TextBox x:Name="LastNameTextBox"/>
+
+                <TextBlock Text="Телефон" Margin="0,10,0,0" Foreground="#477EA8"/>
+                <TextBox x:Name="PhoneTextBox"/>
+
+                <TextBlock Text="Адрес" Margin="0,10,0,0" Foreground="#477EA8"/>
+                <TextBox x:Name="AddressTextBox"/>
+
+                <Button Content="Зарегистрироваться" Click="Register_Click"/>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,12,0,0">
+                    <TextBlock Text="Уже есть аккаунт?" Foreground="#477EA8" Margin="0,0,6,0"/>
+                    <TextBlock>
+                        <Hyperlink Click="OpenLogin_Click" Foreground="#0E7AC3">Войти</Hyperlink>
+                    </TextBlock>
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Page>

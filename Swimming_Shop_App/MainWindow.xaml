@@ -1,0 +1,42 @@
+﻿<Window x:Class="Swimming_Shop_App.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Swimming_Shop_App"
+        mc:Ignorable="d"
+        Title="Swimming Shop"
+        WindowState="Maximized"
+        ResizeMode="CanResize"
+        WindowStartupLocation="CenterScreen"
+        Background="{DynamicResource SeaGradient}">
+    <Window.Resources>
+        <LinearGradientBrush x:Key="SeaGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#0E7AC3" Offset="0"/>
+            <GradientStop Color="#00C2FF" Offset="1"/>
+        </LinearGradientBrush>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.Effect>
+            <DropShadowEffect BlurRadius="24" ShadowDepth="0" Color="#33000000"/>
+        </Grid.Effect>
+
+        <Border CornerRadius="16"
+                Background="White"
+                Padding="20"
+                Margin="40"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch">
+            <DockPanel>
+                <Menu DockPanel.Dock="Top" Background="Transparent" Margin="0,0,0,10">
+                    <MenuItem Header="Каталог" Click="CatalogMenu_Click" FontSize="14" FontWeight="SemiBold"/>
+                    <MenuItem Header="Корзина" Click="CartMenu_Click" FontSize="14" FontWeight="SemiBold"/>
+                    <MenuItem Header="Заказы" Click="OrdersMenu_Click" FontSize="14" FontWeight="SemiBold"/>
+                    <MenuItem Header="Профиль" Click="ProfileMenu_Click" FontSize="14" FontWeight="SemiBold"/>
+                </Menu>
+                <Frame x:Name="ContentFrame" NavigationUIVisibility="Hidden"/>
+            </DockPanel>
+        </Border>
+    </Grid>
+</Window>

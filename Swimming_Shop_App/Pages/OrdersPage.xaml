@@ -1,0 +1,8 @@
+<Page x:Class="Swimming_Shop_App.Pages.OrdersPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Заказы">
+    <Grid>
+        <TextBlock Text="Заказы — в разработке" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
+    </Grid>
+</Page>

@@ -1,0 +1,8 @@
+<Page x:Class="Swimming_Shop_App.Pages.CartPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Корзина">
+    <Grid>
+        <TextBlock Text="Корзина — в разработке" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
+    </Grid>
+</Page>
