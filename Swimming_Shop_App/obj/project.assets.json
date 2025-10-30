@@ -3508,11 +3508,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\lilih\\source\\repos\\WebApi_Shop\\Swimming_Shop_App\\Swimming_Shop_App.csproj",
+      "projectUniqueName": "C:\\Users\\lilih\\Source\\Repos\\Swimming_Shop1\\Swimming_Shop_App\\Swimming_Shop_App.csproj",
       "projectName": "Swimming_Shop_App",
-      "projectPath": "C:\\Users\\lilih\\source\\repos\\WebApi_Shop\\Swimming_Shop_App\\Swimming_Shop_App.csproj",
+      "projectPath": "C:\\Users\\lilih\\Source\\Repos\\Swimming_Shop1\\Swimming_Shop_App\\Swimming_Shop_App.csproj",
       "packagesPath": "C:\\Users\\lilih\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\lilih\\source\\repos\\WebApi_Shop\\Swimming_Shop_App\\obj\\",
+      "outputPath": "C:\\Users\\lilih\\Source\\Repos\\Swimming_Shop1\\Swimming_Shop_App\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -3533,8 +3533,8 @@
         "net8.0-windows7.0": {
           "targetAlias": "net8.0-windows",
           "projectReferences": {
-            "C:\\Users\\lilih\\source\\repos\\WebApi_Shop\\WebApi_Shop\\WebApi_Shop.csproj": {
-              "projectPath": "C:\\Users\\lilih\\source\\repos\\WebApi_Shop\\WebApi_Shop\\WebApi_Shop.csproj"
+            "C:\\Users\\lilih\\Source\\Repos\\Swimming_Shop1\\WebApi_Shop\\WebApi_Shop.csproj": {
+              "projectPath": "C:\\Users\\lilih\\Source\\Repos\\Swimming_Shop1\\WebApi_Shop\\WebApi_Shop.csproj"
             }
           }
         }

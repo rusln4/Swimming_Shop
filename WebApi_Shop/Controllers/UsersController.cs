@@ -1,10 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApi_Shop.Models;
-using System.Text.Json;
-using System.Collections.Generic;
-using System.Linq;
-
+using WebApi_Shop.Models.Requests;
 
 namespace WebApi.Controllers
 {
@@ -14,35 +11,27 @@ namespace WebApi.Controllers
     {
         private readonly SwimShopDbContext _context;
 
-        public UsersController(SwimShopDbContext context)
-        {
-            _context = context;
-        }
+        public UsersController(SwimShopDbContext context) => _context = context;
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
-        {
-            return await _context.Users.ToListAsync();
-        }
+        public async Task<ActionResult<IEnumerable<User>>> GetUsers() =>
+            await _context.Users.ToListAsync();
 
         [HttpGet("{id}")]
-        public Task<ActionResult<User>> GetUser(int id)
+        public async Task<ActionResult<User>> GetUser(int id)
         {
-            var user = _context.Users.FirstOrDefault(u => u.IdUsers == id);
-            if (user == null)
-            {
-                return Task.FromResult<ActionResult<User>>(NotFound());  
-            }
-            return Task.FromResult<ActionResult<User>>(Ok(user));
+            var user = await _context.Users.FindAsync(id);
+            return user is null ? NotFound() : Ok(user);
         }
 
         [HttpPost("register")]
         public async Task<ActionResult<User>> Register([FromBody] RegisterRequest request)
         {
-            if (_context.Users.Any(u => u.MailUser == request.MailUser))
-            {
+            if (request is null) return BadRequest("Body is required.");
+            if (string.IsNullOrWhiteSpace(request.MailUser) || string.IsNullOrWhiteSpace(request.PasswordUser))
+                return BadRequest("MailUser and PasswordUser are required.");
+            if (await _context.Users.AnyAsync(u => u.MailUser == request.MailUser))
                 return BadRequest("This email is already registered");
-            }
 
             var user = new User
             {
@@ -58,97 +47,58 @@ namespace WebApi.Controllers
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUser", new { id = user.IdUsers }, user);
+            return CreatedAtAction(nameof(GetUser), new { id = user.IdUsers }, user);
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] Dictionary<string, object> body)
+        public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
-            if (body == null)
-                return BadRequest("Body is required.");
-        
-            // Make key lookup case-insensitive (MailUser/mailUser etc.)
-            var dict = new Dictionary<string, object>(body, System.StringComparer.OrdinalIgnoreCase);
-        
-            if (!dict.TryGetValue("MailUser", out var mailObj) || !dict.TryGetValue("PasswordUser", out var passObj))
-                return BadRequest("MailUser and PasswordUser are required.");
-        
-            var mail = mailObj?.ToString();
-            var password = passObj?.ToString();
-        
-            if (string.IsNullOrWhiteSpace(mail) || string.IsNullOrWhiteSpace(password))
+            if (request is null) return BadRequest("Body is required.");
+            if (string.IsNullOrWhiteSpace(request.MailUser) || string.IsNullOrWhiteSpace(request.PasswordUser))
                 return BadRequest("MailUser and PasswordUser must be non-empty.");
-        
+
             var user = await _context.Users
-                .FirstOrDefaultAsync(u => u.MailUser == mail && u.PasswordUser == password);
-        
-            if (user == null)
-                return Unauthorized();
-        
+                .FirstOrDefaultAsync(u => u.MailUser == request.MailUser && u.PasswordUser == request.PasswordUser);
+
+            if (user is null) return Unauthorized();
+
             return Ok(new
             {
-                IdUsers = user.IdUsers,
-                MailUser = user.MailUser,
-                NameUser = user.NameUser,
-                LastnameUser = user.LastnameUser,
-                PhoneUser = user.PhoneUser,
-                AddressUser = user.AddressUser,
-                RoleUser = user.RoleUser
+                user.IdUsers,
+                user.MailUser,
+                user.NameUser,
+                user.LastnameUser,
+                user.PhoneUser,
+                user.AddressUser,
+                user.RoleUser
             });
         }
 
-        private bool UserExists(int id)
-        {
-            return _context.Users.Any(u => u.IdUsers == id);
-        }
-
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(int id, [FromBody] Dictionary<string, object> body)
+        public async Task<IActionResult> PutUser(int id, [FromBody] UpdateUserRequest request)
         {
-            if (body == null)
-                return BadRequest("Body is required.");
-        
-            // Case-insensitive key lookup for IdUsers/nameUser/etc.
-            var dict = new Dictionary<string, object>(body, System.StringComparer.OrdinalIgnoreCase);
-        
-            if (dict.TryGetValue("IdUsers", out var idObj)
-                && int.TryParse(idObj?.ToString(), out var idFromBody)
-                && idFromBody != id)
-            {
+            if (request is null) return BadRequest("Body is required.");
+            if (request.IdUsers.HasValue && request.IdUsers.Value != id)
                 return BadRequest("ID in body does not match route.");
-            }
-        
+
             var user = await _context.Users.FindAsync(id);
-            if (user == null)
-                return NotFound();
-        
-            if (dict.TryGetValue("NameUser", out var nameObj) && nameObj is not null)
-                user.NameUser = nameObj.ToString();
-        
-            if (dict.TryGetValue("LastnameUser", out var lastObj) && lastObj is not null)
-                user.LastnameUser = lastObj.ToString();
-        
-            if (dict.TryGetValue("AddressUser", out var addrObj) && addrObj is not null)
-                user.AddressUser = addrObj.ToString();
-        
-            if (dict.TryGetValue("PasswordUser", out var passObj))
-            {
-                var pass = passObj?.ToString();
-                if (!string.IsNullOrWhiteSpace(pass))
-                    user.PasswordUser = pass;
-            }
-        
+            if (user is null) return NotFound();
+
+            if (!string.IsNullOrWhiteSpace(request.NameUser)) user.NameUser = request.NameUser;
+            if (!string.IsNullOrWhiteSpace(request.LastnameUser)) user.LastnameUser = request.LastnameUser;
+            if (!string.IsNullOrWhiteSpace(request.AddressUser)) user.AddressUser = request.AddressUser;
+            if (!string.IsNullOrWhiteSpace(request.PasswordUser)) user.PasswordUser = request.PasswordUser;
+
             try
             {
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!_context.Users.Any(e => e.IdUsers == id))
-                    return NotFound();
+                if (!await _context.Users.AnyAsync(e => e.IdUsers == id)) return NotFound();
                 throw;
             }
-        
+
             return NoContent();
         }
 
@@ -156,31 +106,11 @@ namespace WebApi.Controllers
         public async Task<IActionResult> DeleteUser(int id)
         {
             var user = await _context.Users.FindAsync(id);
-            if (user == null)
-            {
-                return NotFound();
-            }
+            if (user is null) return NotFound();
 
             _context.Users.Remove(user);
             await _context.SaveChangesAsync();
-
             return NoContent();
         }
-    }
-
-    public class RegisterRequest
-    {
-        public string MailUser { get; set; } = null!;
-        public string PasswordUser { get; set; } = null!;
-        public string NameUser { get; set; } = null!;
-        public string LastnameUser { get; set; } = null!;
-        public string PhoneUser { get; set; } = null!;
-        public string AddressUser { get; set; } = null!;
-    }
-
-    public class LoginRequest
-    {
-        public string MailUser { get; set; } = null!;
-        public string PasswordUser { get; set; } = null!;
     }
 }

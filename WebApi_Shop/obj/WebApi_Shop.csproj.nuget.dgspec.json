@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\lilih\\source\\repos\\WebApi_Shop\\WebApi_Shop\\WebApi_Shop.csproj": {}
+    "C:\\Users\\lilih\\Source\\Repos\\Swimming_Shop1\\WebApi_Shop\\WebApi_Shop.csproj": {}
   },
   "projects": {
-    "C:\\Users\\lilih\\source\\repos\\WebApi_Shop\\WebApi_Shop\\WebApi_Shop.csproj": {
+    "C:\\Users\\lilih\\Source\\Repos\\Swimming_Shop1\\WebApi_Shop\\WebApi_Shop.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\lilih\\source\\repos\\WebApi_Shop\\WebApi_Shop\\WebApi_Shop.csproj",
+        "projectUniqueName": "C:\\Users\\lilih\\Source\\Repos\\Swimming_Shop1\\WebApi_Shop\\WebApi_Shop.csproj",
         "projectName": "WebApi_Shop",
-        "projectPath": "C:\\Users\\lilih\\source\\repos\\WebApi_Shop\\WebApi_Shop\\WebApi_Shop.csproj",
+        "projectPath": "C:\\Users\\lilih\\Source\\Repos\\Swimming_Shop1\\WebApi_Shop\\WebApi_Shop.csproj",
         "packagesPath": "C:\\Users\\lilih\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\lilih\\source\\repos\\WebApi_Shop\\WebApi_Shop\\obj\\",
+        "outputPath": "C:\\Users\\lilih\\Source\\Repos\\Swimming_Shop1\\WebApi_Shop\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

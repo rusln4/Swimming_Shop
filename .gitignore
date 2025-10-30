@@ -1,0 +1,10 @@
+# Ignore Visual Studio and build files
+.vs/
+bin/
+obj/
+Debug/
+Release/
+*.user
+*.suo
+*.cache
+*.log
