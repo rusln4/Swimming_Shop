@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\lilih\Source\Repos\Swimming_Shop1\Swimming_Shop_App\obj\Debug\net8.0-windows\
+C:\Users\lilih\source\repos\Swimming_Shop1\Swimming_Shop_App\obj\Debug\net8.0-windows\
 Swimming_Shop_App
 none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP
-C:\Users\lilih\Source\Repos\Swimming_Shop1\Swimming_Shop_App\App.xaml
+C:\Users\lilih\source\repos\Swimming_Shop1\Swimming_Shop_App\App.xaml
 8-1160607628
 
 171271473090
-3461516425170
+3461796771066
 AuthWindow.xaml;MainWindow.xaml;Pages\CartPage.xaml;Pages\CatalogPage.xaml;Pages\LoginPage.xaml;Pages\OrdersPage.xaml;Pages\ProfilePage.xaml;Pages\RegisterPage.xaml;
 
-False
+True
 

@@ -40,10 +40,7 @@ namespace WebApi.Controllers
         [HttpGet("order/{orderId}")]
         public async Task<ActionResult<IEnumerable<OrderItem>>> GetOrderItemsByOrder(int orderId)
         {
-            var orderItems = await _context.OrderItems
-                .Where(o => o.IdOrder == orderId)
-                .Include(o => o.IdProductNavigation)
-                .ToListAsync();
+            var orderItems = await _context.OrderItems.Where(o => o.IdOrder == orderId).Include(o => o.IdProductNavigation).ToListAsync();
 
             if (!orderItems.Any())
             {

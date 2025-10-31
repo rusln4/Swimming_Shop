@@ -2,7 +2,99 @@
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       Title="Корзина">
-    <Grid>
-        <TextBlock Text="Корзина — в разработке" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Заголовок -->
+        <TextBlock Grid.Row="0" Text="Корзина"
+                   FontSize="24" FontWeight="Bold" Margin="0,0,0,12"/>
+
+        <!-- Контент: слева список позиций, справа итог -->
+      
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Список товаров -->
+            <Border Grid.Column="0" BorderBrush="#DDDDDD" BorderThickness="1" CornerRadius="6" Margin="0,0,16,0">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="8">
+                        <!-- Заглушка, когда нет товаров -->
+                        <StackPanel x:Name="EmptyStatePanel" Margin="0,40,0,0" HorizontalAlignment="Center">
+                            <TextBlock Text="В вашей корзине пока пусто" FontSize="16" FontWeight="SemiBold" HorizontalAlignment="Center"/>
+                            <TextBlock Text="Добавьте товары из каталога, и они появятся здесь." Margin="0,8,0,0" HorizontalAlignment="Center"/>
+                        </StackPanel>
+
+                        <!-- Шаблон элемента корзины -->
+                        <ItemsControl x:Name="CartItemsList">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border BorderBrush="#EEEEEE" BorderThickness="1" CornerRadius="6" Padding="8" Margin="0,0,0,8">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="84"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="180"/>
+                                                <ColumnDefinition Width="120"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <!-- Картинка товара -->
+                                            <Border Width="68" Height="68" CornerRadius="6" Background="#F5F5F5" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                                <Image Source="{Binding PictureProduct}" Stretch="UniformToFill" />
+                                            </Border>
+
+                                            <!-- Информация: название, описание, цена -->
+                                            <StackPanel Grid.Column="1" Margin="12,0,0,0" VerticalAlignment="Center">
+                                                <TextBlock Text="{Binding NameProduct}" FontSize="16" FontWeight="SemiBold"/>
+                                                <TextBlock Text="{Binding DescriptionProduct}" Foreground="#666" FontSize="12" Margin="0,4,0,0"/>
+                                                <TextBlock Text="{Binding PriceProduct, StringFormat={}{0} ₽}" FontSize="14" FontWeight="Bold" Margin="0,6,0,0"/>
+                                            </StackPanel>
+
+                                            <!-- Количество -->
+                                            <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                <Button Content="–" Width="32" Height="32" />
+                                                <TextBlock Text="{Binding CartQuantity}" Margin="10,0" VerticalAlignment="Center" FontSize="14"/>
+                                                <Button Content="+" Width="32" Height="32" />
+                                            </StackPanel>
+
+                                            <!-- Удаление -->
+                                            <StackPanel Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Center" Orientation="Horizontal">
+                                                <Button Content="Удалить" Padding="10,4" />
+                                            </StackPanel>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </ScrollViewer>
+            </Border>
+
+            <!-- Блок итога и действий -->
+            <Border Grid.Column="1" BorderBrush="#DDDDDD" BorderThickness="1" CornerRadius="6" Padding="12">
+                <StackPanel>
+                    <TextBlock Text="Итого" FontSize="18" FontWeight="Bold" />
+                    <TextBlock x:Name="TotalText" Text="0 ₽" FontSize="24" FontWeight="Bold" Margin="0,4,0,12"/>
+
+                    <Separator Margin="0,8,0,8"/>
+
+                    <!-- УБРАН Spacing: задаем отступы на кнопках -->
+                    <StackPanel Orientation="Vertical">
+                        <Button x:Name="ClearCartButton" Content="Очистить корзину" Padding="12,6" Background="#FFF3F3" BorderBrush="#E5B3B3" Foreground="#A33" />
+                        <Button x:Name="CheckoutButton" Content="Оформить заказ" Padding="12,6" Background="#3B82F6" Foreground="White" BorderBrush="#3B82F6" Margin="0,8,0,0"/>
+                        <Button x:Name="BackToCatalogButton" Content="Вернуться к покупкам" Padding="12,6" Margin="0,8,0,0"/>
+                    </StackPanel>
+
+                    <!-- Подсказка -->
+                    <TextBlock Text="Тут можно показать условия доставки, оплаты и т.д."
+                               Foreground="#666" FontSize="12" Margin="0,12,0,0"/>
+                </StackPanel>
+            </Border>
+        </Grid>
     </Grid>
 </Page>

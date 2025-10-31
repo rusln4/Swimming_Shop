@@ -40,11 +40,7 @@ namespace WebApi.Controllers
         [HttpGet("user/{userId}")]
         public async Task<ActionResult<IEnumerable<CartItem>>> GetCartItemsByUser(int userId)
         {
-            var cartItems = await _context.CartItems
-                .Where(c => c.IdUserCart == userId)
-                .Include(c => c.IdProductCartNavigation)
-                .ToListAsync();
-
+            var cartItems = await _context.CartItems.Where(c => c.IdUserCart == userId).Include(c => c.IdProductCartNavigation).ToListAsync();
             return cartItems;
         }
 
@@ -52,14 +48,12 @@ namespace WebApi.Controllers
         [HttpPost]
         public async Task<ActionResult<CartItem>> PostCartItem(CartItem cartItem)
         {
-            // Проверяем, существует ли уже такой товар в корзине пользователя
-            var existingItem = await _context.CartItems
-                .FirstOrDefaultAsync(c => c.IdUserCart == cartItem.IdUserCart && 
-                                         c.IdProductCart == cartItem.IdProductCart);
+           
+            var existingItem = await _context.CartItems.FirstOrDefaultAsync(c => c.IdUserCart == cartItem.IdUserCart && c.IdProductCart == cartItem.IdProductCart);
 
             if (existingItem != null)
             {
-                // Если товар уже есть, увеличиваем количество
+                
                 existingItem.Quantity += cartItem.Quantity;
                 existingItem.AddedDate = DateTime.Now;
                 
@@ -69,7 +63,6 @@ namespace WebApi.Controllers
                 return CreatedAtAction("GetCartItem", new { id = existingItem.IdCartItem }, existingItem);
             }
             
-            // Если товара нет, добавляем новый
             cartItem.AddedDate = DateTime.Now;
             _context.CartItems.Add(cartItem);
             await _context.SaveChangesAsync();
@@ -127,9 +120,7 @@ namespace WebApi.Controllers
         [HttpDelete("user/{userId}")]
         public async Task<IActionResult> ClearUserCart(int userId)
         {
-            var cartItems = await _context.CartItems
-                .Where(c => c.IdUserCart == userId)
-                .ToListAsync();
+            var cartItems = await _context.CartItems.Where(c => c.IdUserCart == userId).ToListAsync();
 
             if (!cartItems.Any())
             {

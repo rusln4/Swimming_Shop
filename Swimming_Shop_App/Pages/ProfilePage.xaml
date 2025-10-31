@@ -14,6 +14,16 @@
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="👤" FontSize="24" VerticalAlignment="Center" Margin="0,0,10,0"/>
                     <TextBlock Text="Мой профиль" FontSize="24" FontWeight="Bold" VerticalAlignment="Center"/>
+                    <!-- Кнопка выхода -->
+                    <Button x:Name="LogoutButton"
+                            Content="Выйти"
+                            Click="LogoutButton_Click"
+                            Margin="20,0,0,0"
+                            Padding="16,6"
+                            Background="#dc3545"
+                            Foreground="White"
+                            BorderBrush="#dc3545"
+                            HorizontalAlignment="Right"/>
                 </StackPanel>
             </Border>
 

@@ -53,7 +53,7 @@
                 </StackPanel>
             </Border>
             
-            <!-- Фильтры -->
+            
             <Border Background="#f8f9fa" CornerRadius="8" Padding="15">
                 <StackPanel>
                     <TextBlock Text="Фильтры" FontWeight="SemiBold" FontSize="14" Margin="0,0,0,10"/>
@@ -104,9 +104,9 @@
             </Border>
         </StackPanel>
 
-        <!-- Список товаров -->
+        
         <Grid Grid.Row="1">
-            <!-- Индикатор загрузки -->
+            
             <StackPanel x:Name="LoadingPanel" 
                         HorizontalAlignment="Center" 
                         VerticalAlignment="Center"
@@ -115,7 +115,7 @@
                 <TextBlock Text="Загрузка товаров..." FontSize="14" HorizontalAlignment="Center"/>
             </StackPanel>
             
-            <!-- Сообщение о пустом результате -->
+            
             <StackPanel x:Name="EmptyResultPanel" 
                         HorizontalAlignment="Center" 
                         VerticalAlignment="Center"
@@ -125,7 +125,7 @@
                 <TextBlock Text="Попробуйте изменить параметры поиска" FontSize="12" Foreground="Gray" HorizontalAlignment="Center"/>
             </StackPanel>
             
-            <!-- Список товаров -->
+           
             <ScrollViewer x:Name="ProductsScrollViewer">
                 <ItemsControl ItemsSource="{Binding Products}">
                     <ItemsControl.ItemTemplate>
@@ -146,7 +146,7 @@
                                         <ColumnDefinition Width="260"/>
                                     </Grid.ColumnDefinitions>
                                     
-                                    <!-- Изображение товара (увеличено, без обрезания) -->
+                                  
                                     <Border Grid.Column="0" 
                                             Background="#f8f9fa" 
                                             CornerRadius="10"
@@ -158,7 +158,7 @@
                                                HorizontalAlignment="Center"/>
                                     </Border>
                                     
-                                    <!-- Информация о товаре (крупнее шрифты, больше отступы) -->
+                                   
                                     <StackPanel Grid.Column="1" Margin="24,0,0,0" VerticalAlignment="Center">
                                         <TextBlock Text="{Binding NameProduct}" 
                                                    FontWeight="SemiBold" 
@@ -181,7 +181,6 @@
                                         </StackPanel>
                                     </StackPanel>
                                     
-                                    <!-- Цена и кнопка (крупнее) -->
                                     <StackPanel Grid.Column="2" 
                                                 HorizontalAlignment="Right" 
                                                 VerticalAlignment="Center">
@@ -191,15 +190,16 @@
                                                    Foreground="#0d6efd"
                                                    HorizontalAlignment="Right"
                                                    Margin="0,0,0,18"/>
-                                        <Button Content="В корзину" 
-                                                Padding="20,12" 
-                                                Tag="{Binding}" 
-                                                Click="AddToCart_Click"
-                                                Background="#28a745"
-                                                Foreground="White"
-                                                BorderBrush="#28a745"
-                                                FontWeight="SemiBold"
-                                                Width="200"/>
+
+                                        
+                                        <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                                            <Button Content="Добавить в корзину"
+                                                    Foreground="White"
+                                                    BorderBrush="#0d6efd"
+                                                    Background="#0d6efd"
+                                                    Padding="10,4"
+                                                    Click="AddToCart_Click"/>
+                                        </StackPanel>
                                     </StackPanel>
                                 </Grid>
                             </Border>

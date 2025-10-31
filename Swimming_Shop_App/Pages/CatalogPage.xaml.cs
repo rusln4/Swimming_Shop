@@ -8,6 +8,7 @@ using System.Windows.Input;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.IO;
+using System.Collections.Generic;
 
 namespace Swimming_Shop_App.Pages
 {
@@ -21,6 +22,18 @@ namespace Swimming_Shop_App.Pages
         public ObservableCollection<ProductItem> Products { get; } = new ObservableCollection<ProductItem>();
         private bool _isSearchMode = false;
 
+        private int _currentUserId;
+        private readonly Dictionary<int, int> _cartItemIds = new(); // productId -> cartItemId
+
+        private class CartDto
+        {
+            public int IdCartItem { get; set; }
+            public int IdUserCart { get; set; }
+            public int IdProductCart { get; set; }
+            public int Quantity { get; set; }
+            public DateTime? AddedDate { get; set; }
+        }
+
         public CatalogPage()
         {
             InitializeComponent();
@@ -29,15 +42,71 @@ namespace Swimming_Shop_App.Pages
             Loaded += async (s, e) =>
             {
                 await LoadProductsAsync();
+                _currentUserId = GetCurrentUserId();
+                await LoadUserCartAsync();
                 ApplyLocalFilters();
                 UpdateEmptyState();
             };
+        }
+
+        // Получение текущего Id пользователя из Application.Current.Properties
+        private int GetCurrentUserId()
+        {
+            try
+            {
+                var props = Application.Current.Properties;
+    
+                // В WPF это System.Collections.IDictionary => используем Contains, не ContainsKey
+                if (props != null && props.Contains("UserId"))
+                {
+                    var uidObj = props["UserId"];
+    
+                    
+                    if (uidObj is int uidInt)
+                        return uidInt;
+    
+                    if (uidObj != null && int.TryParse(uidObj.ToString(), out var uidParsed))
+                        return uidParsed;
+                }
+            }
+            catch
+            {
+                
+            }
+    
+            return 0;
         }
 
         private HttpClient CreateHttp()
         {
             var handler = new HttpClientHandler { UseProxy = false, Proxy = null };
             return new HttpClient(handler) { BaseAddress = new Uri(ApiConfig.BaseUrl) };
+        }
+
+        private async Task LoadUserCartAsync()
+        {
+            try
+            {
+                using var http = CreateHttp();
+                var items = await http.GetFromJsonAsync<List<CartDto>>($"api/cartitems/user/{_currentUserId}") ?? new List<CartDto>();
+
+                _cartItemIds.Clear();
+
+                foreach (var ci in items)
+                {
+                    _cartItemIds[ci.IdProductCart] = ci.IdCartItem;
+
+                    var p = _allProducts.FirstOrDefault(x => x.IdProduct == ci.IdProductCart);
+                    if (p != null)
+                    {
+                        p.CartQuantity = ci.Quantity;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Не удалось загрузить корзину: {ex.Message}");
+            }
         }
 
         private async Task<bool> CheckServerAsync(HttpClient http)
@@ -291,14 +360,126 @@ namespace Swimming_Shop_App.Pages
             UpdateEmptyState();
         }
 
+        // Откат: оставляем единственный обработчик без логики API
         private void AddToCart_Click(object sender, RoutedEventArgs e)
         {
-            var button = sender as Button;
-            var item = button?.Tag as ProductItem;
-            if (item != null)
+            if (sender is Button btn && btn.DataContext is ProductItem product)
             {
-                MessageBox.Show($"Товар '{item.NameProduct}' добавлен в корзину.");
+                MessageBox.Show($"Товар \"{product.NameProduct}\" добавлен (заглушка).");
             }
         }
+
+        private async Task AddOneAsync(ProductItem item)
+        {
+            try
+            {
+                using var http = CreateHttp();
+
+                var payload = new
+                {
+                    IdUserCart = _currentUserId,
+                    IdProductCart = item.IdProduct,
+                    Quantity = 1
+                };
+
+                var res = await http.PostAsJsonAsync("api/cartitems", payload);
+                if (!res.IsSuccessStatusCode)
+                {
+                    MessageBox.Show("Не удалось добавить товар в корзину.");
+                    return;
+                }
+
+                item.CartQuantity += 1;
+                await RefreshCartItemIdAsync(item.IdProduct);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка добавления: {ex.Message}");
+            }
+        }
+
+        private async Task RefreshCartItemIdAsync(int productId)
+        {
+            try
+            {
+                using var http = CreateHttp();
+                var items = await http.GetFromJsonAsync<List<CartDto>>($"api/cartitems/user/{_currentUserId}") ?? new List<CartDto>();
+                var ci = items.FirstOrDefault(x => x.IdProductCart == productId);
+                if (ci != null)
+                {
+                    _cartItemIds[productId] = ci.IdCartItem;
+                }
+            }
+            catch
+            {
+                // без паники, обновим в следующий раз
+            }
+        }
+
+        private async void Increment_Click(object sender, RoutedEventArgs e)
+        {
+            var btn = sender as Button;
+            var item = btn?.Tag as ProductItem;
+            if (item == null) return;
+
+            await AddOneAsync(item);
+        }
+
+        private async void Decrement_Click(object sender, RoutedEventArgs e)
+        {
+            var btn = sender as Button;
+            var item = btn?.Tag as ProductItem;
+            if (item == null) return;
+
+            if (!_cartItemIds.TryGetValue(item.IdProduct, out var cartId) || cartId <= 0)
+            {
+                await RefreshCartItemIdAsync(item.IdProduct);
+                _cartItemIds.TryGetValue(item.IdProduct, out cartId);
+                if (cartId <= 0) return;
+            }
+
+            try
+            {
+                using var http = CreateHttp();
+
+                if (item.CartQuantity <= 1)
+                {
+                    var del = await http.DeleteAsync($"api/cartitems/{cartId}");
+                    if (!del.IsSuccessStatusCode)
+                    {
+                        MessageBox.Show("Не удалось удалить товар из корзины.");
+                        return;
+                    }
+
+                    item.CartQuantity = 0;
+                    _cartItemIds.Remove(item.IdProduct);
+                    return;
+                }
+
+                var ci = await http.GetFromJsonAsync<CartDto>($"api/cartitems/{cartId}");
+                if (ci == null)
+                {
+                    MessageBox.Show("Позиция корзины не найдена.");
+                    return;
+                }
+
+                ci.Quantity = item.CartQuantity - 1;
+
+                var put = await http.PutAsJsonAsync($"api/cartitems/{cartId}", ci);
+                if (!put.IsSuccessStatusCode)
+                {
+                    MessageBox.Show("Не удалось обновить количество.");
+                    return;
+                }
+
+                item.CartQuantity -= 1;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка изменения количества: {ex.Message}");
+            }
+        }
+
+        
     }
 }

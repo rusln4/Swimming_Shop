@@ -43,14 +43,11 @@ namespace WebApi.Controllers
         [HttpGet("search")]
         public async Task<ActionResult<IEnumerable<Product>>> SearchProduct([FromQuery] string name)
         {
-            // Защита от пустого запроса и потенциальных крашей
+           
             if (string.IsNullOrWhiteSpace(name))
                 return Ok(Array.Empty<Product>());
 
-            // Убираем лишние Include, если они вызывают проблемы; добавьте обратно при необходимости
-            var list = await _context.Products
-                .Where(p => p.NameProduct.Contains(name))
-                .ToListAsync();
+            var list = await _context.Products.Where(p => p.NameProduct.Contains(name)).ToListAsync();
 
             return Ok(list);
         }

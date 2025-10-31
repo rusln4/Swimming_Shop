@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "89Fl3wju3swC8Dll76sYdCgJBYOFr0ILGQkpzLQgWjQMf0Tf2glNQMZ5oWrz6gIVo9XYg4oDUAdyVxCS/8TneQ==",
+  "dgSpecHash": "7SrrNgwKJLiFxITzsWm/N5tR9xB4zIjetic3Oy+53bxI/vPVxJVS2Y39fLfWkDjwGz1WRBphCE4Z9YAah7rI5g==",
   "success": true,
-  "projectFilePath": "C:\\Users\\lilih\\Source\\Repos\\Swimming_Shop1\\Swimming_Shop_App\\Swimming_Shop_App.csproj",
+  "projectFilePath": "C:\\Users\\lilih\\source\\repos\\Swimming_Shop1\\Swimming_Shop_App\\Swimming_Shop_App.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\lilih\\.nuget\\packages\\castle.core\\5.1.1\\castle.core.5.1.1.nupkg.sha512",
     "C:\\Users\\lilih\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",

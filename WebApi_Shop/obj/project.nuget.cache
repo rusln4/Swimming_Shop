@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "gG7ba8qr5SwoMpgaH3HIvciQm3bBMBvGUqtm1OFmvlHViRMaVNHGUsqqjresTxT335+s1W+GXLZYUAu4NZ/qbA==",
+  "dgSpecHash": "8X8M0WjS/v9D2DDQWVOAUhUvGaBY/SN/Ozcn5DHNq7SlJd2TKI6rRSr2Viq8tmXXO9OHl2JhLu4mYUnAGmFmag==",
   "success": true,
-  "projectFilePath": "C:\\Users\\lilih\\Source\\Repos\\Swimming_Shop1\\WebApi_Shop\\WebApi_Shop.csproj",
+  "projectFilePath": "C:\\Users\\lilih\\source\\repos\\Swimming_Shop1\\WebApi_Shop\\WebApi_Shop.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\lilih\\.nuget\\packages\\castle.core\\5.1.1\\castle.core.5.1.1.nupkg.sha512",
     "C:\\Users\\lilih\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",

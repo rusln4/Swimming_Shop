@@ -172,6 +172,26 @@ namespace Swimming_Shop_App.Pages
                 MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
+        private void LogoutButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Очистка сохранённых данных пользователя
+            Application.Current.Properties.Remove("CurrentUserId");
+            Application.Current.Properties.Remove("CurrentUserEmail");
+            Application.Current.Properties.Remove("CurrentUserName");
+            Application.Current.Properties.Remove("CurrentUserLastName");
+            Application.Current.Properties.Remove("CurrentUserPhone");
+            Application.Current.Properties.Remove("CurrentUserAddress");
+            Application.Current.Properties.Remove("CurrentUserRole");
+
+            // Переход на окно авторизации
+            var auth = new AuthWindow();
+            auth.Show();
+
+            // Закрываем текущее главное окно
+            var main = Window.GetWindow(this);
+            main?.Close();
+        }
+
         private void ShowLoading(bool isLoading)
         {
             LoadingOverlay.Visibility = isLoading ? Visibility.Visible : Visibility.Collapsed;
