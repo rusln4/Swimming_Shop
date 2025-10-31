@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Swimming_Shop_App")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ed5010b19e2d4ba3ecb6fae8b44998c208d98b48")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6c5c74c1267813922dfbe8741072f06d0703c48e")]
 [assembly: System.Reflection.AssemblyProductAttribute("Swimming_Shop_App")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Swimming_Shop_App")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

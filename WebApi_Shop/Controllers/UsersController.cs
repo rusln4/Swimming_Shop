@@ -91,7 +91,7 @@ namespace WebApi.Controllers
             });
         }
 
-        [HttpPut("users/{id}")]
+        [HttpPut("{id}")]
         public async Task<IActionResult> PutUser(int id, [FromBody] UpdateUserRequest request)
         {
             if (request is null)
@@ -140,7 +140,7 @@ namespace WebApi.Controllers
             return NoContent();
         }
 
-        [HttpDelete("usesrs/{id}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(int id)
         {
             var user = await _context.Users.FindAsync(id);

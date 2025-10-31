@@ -137,14 +137,15 @@ namespace Swimming_Shop_App.Pages
                     NameUser = FirstNameBox.Text.Trim(),
                     LastnameUser = LastNameBox.Text.Trim(),
                     AddressUser = AddressBox.Text.Trim(),
-                    PasswordUser = NewPasswordBox.Password // может быть пусто — сервер обработает
+                    PasswordUser = NewPasswordBox.Password
                 };
 
                 var res = await http.PutAsJsonAsync($"api/users/{_currentUserId}", payload);
                 if (!res.IsSuccessStatusCode)
                 {
-                    MessageBox.Show("Не удалось обновить профиль. Попробуйте еще раз.", "Ошибка",
-                        MessageBoxButton.OK, MessageBoxImage.Error);
+                    var body = await res.Content.ReadAsStringAsync();
+                    MessageBox.Show($"Код: {(int)res.StatusCode} {res.StatusCode}\n{body}",
+                        "Ответ сервера", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
 
