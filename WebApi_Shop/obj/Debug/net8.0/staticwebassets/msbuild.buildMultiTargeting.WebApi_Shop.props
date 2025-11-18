@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\build\WebApi_Shop.props" />
-</Project>
