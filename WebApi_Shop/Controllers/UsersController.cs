@@ -37,16 +37,16 @@ namespace WebApi.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<ActionResult<User>> Register([FromBody] RegisterRequest request)
+        public async Task<ActionResult<User>> Register([FromBody] RegisterRequest request) 
         {
             if (_context.Users.Any(u => u.MailUser == request.MailUser))
             {
-                return BadRequest("This email is already registered");
+                return BadRequest("Почта уже испоьзуется");
             }
 
             var user = new User
             {
-                RoleUser = 2,
+                RoleUser = 2, 
                 MailUser = request.MailUser,
                 PasswordUser = request.PasswordUser,
                 NameUser = request.NameUser,
@@ -65,19 +65,19 @@ namespace WebApi.Controllers
         public async Task<IActionResult> Login([FromBody] Dictionary<string, object> body)
         {
             if (body == null)
-                return BadRequest("Body is required.");
+                return BadRequest();
         
-            // Make key lookup case-insensitive (MailUser/mailUser etc.)
+            
             var dict = new Dictionary<string, object>(body, System.StringComparer.OrdinalIgnoreCase);
         
             if (!dict.TryGetValue("MailUser", out var mailObj) || !dict.TryGetValue("PasswordUser", out var passObj))
-                return BadRequest("MailUser and PasswordUser are required.");
+                return BadRequest();
         
             var mail = mailObj?.ToString();
             var password = passObj?.ToString();
         
             if (string.IsNullOrWhiteSpace(mail) || string.IsNullOrWhiteSpace(password))
-                return BadRequest("MailUser and PasswordUser must be non-empty.");
+                return BadRequest("Поля не должны быть пустыми");
         
             var user = await _context.Users
                 .FirstOrDefaultAsync(u => u.MailUser == mail && u.PasswordUser == password);
@@ -106,16 +106,16 @@ namespace WebApi.Controllers
         public async Task<IActionResult> PutUser(int id, [FromBody] Dictionary<string, object> body)
         {
             if (body == null)
-                return BadRequest("Body is required.");
+                return BadRequest();
         
-            // Case-insensitive key lookup for IdUsers/nameUser/etc.
+            
             var dict = new Dictionary<string, object>(body, System.StringComparer.OrdinalIgnoreCase);
         
             if (dict.TryGetValue("IdUsers", out var idObj)
                 && int.TryParse(idObj?.ToString(), out var idFromBody)
                 && idFromBody != id)
             {
-                return BadRequest("ID in body does not match route.");
+                return BadRequest();
             }
         
             var user = await _context.Users.FindAsync(id);

@@ -38,7 +38,7 @@ namespace WebApi.Controllers
         [HttpPost]
         public async Task<ActionResult<UserRole>> PostUserRole(UserRole userRole)
         {
-            // Проверяем, существует ли уже роль с таким названием
+          
             if (await _context.UserRoles.AnyAsync(r => r.NameUserRole == userRole.NameUserRole))
             {
                 return BadRequest("Роль с таким названием уже существует");
@@ -59,7 +59,7 @@ namespace WebApi.Controllers
                 return BadRequest();
             }
 
-            // Проверяем, существует ли уже роль с таким названием (кроме текущей)
+            
             if (await _context.UserRoles.AnyAsync(r => r.NameUserRole == userRole.NameUserRole && r.IdUserRoles != id))
             {
                 return BadRequest("Роль с таким названием уже существует");
@@ -87,26 +87,7 @@ namespace WebApi.Controllers
         }
 
         
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUserRole(int id)
-        {
-            var userRole = await _context.UserRoles.FindAsync(id);
-            if (userRole == null)
-            {
-                return NotFound();
-            }
-
-            // Проверяем, используется ли роль пользователями
-            if (await _context.Users.AnyAsync(u => u.RoleUser == id))
-            {
-                return BadRequest("Невозможно удалить роль, так как она используется пользователями");
-            }
-
-            _context.UserRoles.Remove(userRole);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
+        
 
         private bool UserRoleExists(int id)
         {

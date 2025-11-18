@@ -25,11 +25,7 @@ namespace WebApi.Controllers
         [HttpGet("user/{userId}")]
         public async Task<ActionResult<IEnumerable<Order>>> GetUserOrders(int userId)
         {
-            return await _context.Orders
-                .Where(o => o.IdUser == userId)
-                .Include(o => o.OrderItems)
-                .ThenInclude(oi => oi.IdProductNavigation)
-                .ToListAsync();
+            return await _context.Orders.Where(o => o.IdUser == userId).Include(o => o.OrderItems).ThenInclude(oi => oi.IdProductNavigation).ToListAsync();
         }
     }
 }

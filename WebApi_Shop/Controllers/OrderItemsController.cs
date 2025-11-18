@@ -40,10 +40,7 @@ namespace WebApi.Controllers
         [HttpGet("order/{orderId}")]
         public async Task<ActionResult<IEnumerable<OrderItem>>> GetOrderItemsByOrder(int orderId)
         {
-            var orderItems = await _context.OrderItems
-                .Where(o => o.IdOrder == orderId)
-                .Include(o => o.IdProductNavigation)
-                .ToListAsync();
+            var orderItems = await _context.OrderItems.Where(o => o.IdOrder == orderId).Include(o => o.IdProductNavigation).ToListAsync();
 
             if (!orderItems.Any())
             {
@@ -57,6 +54,7 @@ namespace WebApi.Controllers
         [HttpPost]
         public async Task<ActionResult<OrderItem>> PostOrderItem(OrderItem orderItem)
         {
+
             _context.OrderItems.Add(orderItem);
             await _context.SaveChangesAsync();
 
@@ -69,7 +67,7 @@ namespace WebApi.Controllers
         {
             if (orderItems == null || !orderItems.Any())
             {
-                return BadRequest("Список элементов заказа пуст");
+                return BadRequest();
             }
 
             _context.OrderItems.AddRange(orderItems);

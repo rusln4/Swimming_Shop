@@ -134,3 +134,4 @@ C:\Users\lilih\source\repos\WebApi_Shop\WebApi_Shop\obj\Debug\net8.0\refint\WebA
 C:\Users\lilih\source\repos\WebApi_Shop\WebApi_Shop\obj\Debug\net8.0\WebApi_Shop.pdb
 C:\Users\lilih\source\repos\WebApi_Shop\WebApi_Shop\obj\Debug\net8.0\WebApi_Shop.genruntimeconfig.cache
 C:\Users\lilih\source\repos\WebApi_Shop\WebApi_Shop\obj\Debug\net8.0\ref\WebApi_Shop.dll
+C:\Users\lilih\source\repos\WebApi_Shop\WebApi_Shop\obj\Debug\net8.0\WebApi_Shop.sourcelink.json

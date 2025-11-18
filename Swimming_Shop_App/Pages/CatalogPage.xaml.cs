@@ -150,7 +150,7 @@ namespace Swimming_Shop_App.Pages
             }
         }
 
-        // Превращаем путь из БД в пригодный для Image.Source URL
+        
         private string BuildImageUrl(string? path)
         {
             if (string.IsNullOrWhiteSpace(path)) return string.Empty;

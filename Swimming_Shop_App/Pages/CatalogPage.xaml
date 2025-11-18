@@ -52,13 +52,13 @@
                             BorderBrush="#dee2e6"/>
                 </StackPanel>
             </Border>
-            
+
             <!-- Фильтры -->
             <Border Background="#f8f9fa" CornerRadius="8" Padding="15">
                 <StackPanel>
                     <TextBlock Text="Фильтры" FontWeight="SemiBold" FontSize="14" Margin="0,0,0,10"/>
                     <StackPanel Orientation="Horizontal">
-                        
+
                         <StackPanel Margin="0,0,20,0">
                             <TextBlock Text="Цена (₽):" FontSize="12" Margin="0,0,0,4"/>
                             <StackPanel Orientation="Horizontal">
@@ -72,7 +72,7 @@
                                          ToolTip="Максимальная цена в рублях"/>
                             </StackPanel>
                         </StackPanel>
-                        
+
                         <StackPanel Margin="0,0,20,0">
                             <TextBlock Text="Наличие:" FontSize="12" Margin="0,0,0,4"/>
                             <CheckBox x:Name="AvailableOnlyCheck" 
@@ -80,7 +80,7 @@
                                       Checked="AvailabilityChanged" 
                                       Unchecked="AvailabilityChanged"/>
                         </StackPanel>
-                        
+
                         <StackPanel VerticalAlignment="Bottom">
                             <Button Content="Применить" 
                                     Click="ApplyFilters_Click" 
@@ -90,7 +90,7 @@
                                     Foreground="White"
                                     BorderBrush="#0d6efd"/>
                         </StackPanel>
-                        
+
                         <StackPanel VerticalAlignment="Bottom">
                             <Button Content="Сбросить" 
                                     Click="ResetFilters_Click" 
@@ -114,7 +114,7 @@
                 <TextBlock Text="🔄" FontSize="32" HorizontalAlignment="Center" Margin="0,0,0,10"/>
                 <TextBlock Text="Загрузка товаров..." FontSize="14" HorizontalAlignment="Center"/>
             </StackPanel>
-            
+
             <!-- Сообщение о пустом результате -->
             <StackPanel x:Name="EmptyResultPanel" 
                         HorizontalAlignment="Center" 
@@ -124,7 +124,7 @@
                 <TextBlock Text="Товары не найдены" FontSize="16" FontWeight="SemiBold" HorizontalAlignment="Center" Margin="0,0,0,5"/>
                 <TextBlock Text="Попробуйте изменить параметры поиска" FontSize="12" Foreground="Gray" HorizontalAlignment="Center"/>
             </StackPanel>
-            
+
             <!-- Список товаров -->
             <ScrollViewer x:Name="ProductsScrollViewer">
                 <ItemsControl ItemsSource="{Binding Products}">
@@ -145,7 +145,7 @@
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="260"/>
                                     </Grid.ColumnDefinitions>
-                                    
+
                                     <!-- Изображение товара (увеличено, без обрезания) -->
                                     <Border Grid.Column="0" 
                                             Background="#f8f9fa" 
@@ -157,7 +157,7 @@
                                                VerticalAlignment="Center"
                                                HorizontalAlignment="Center"/>
                                     </Border>
-                                    
+
                                     <!-- Информация о товаре (крупнее шрифты, больше отступы) -->
                                     <StackPanel Grid.Column="1" Margin="24,0,0,0" VerticalAlignment="Center">
                                         <TextBlock Text="{Binding NameProduct}" 
@@ -180,7 +180,7 @@
                                                        Foreground="#28a745"/>
                                         </StackPanel>
                                     </StackPanel>
-                                    
+
                                     <!-- Цена и кнопка (крупнее) -->
                                     <StackPanel Grid.Column="2" 
                                                 HorizontalAlignment="Right" 

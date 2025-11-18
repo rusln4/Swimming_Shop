@@ -11,7 +11,7 @@ namespace Swimming_Shop_App.Pages
 {
     public partial class ProfilePage : Page
     {
-        // Убрано: private readonly ApiClient _api = new ApiClient();
+       
         private UserItem? _currentUser;
         private int _currentUserId;
 
